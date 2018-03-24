@@ -39,7 +39,7 @@ body, html {
   
   .pane {
       color: yellow;
-      text-shadow: 2px 2px white;
+     /* position: relative;*/
       text-align: center;
       height: 50%;
       background-color: black;
@@ -50,10 +50,20 @@ body, html {
     font-size: 100px;
     text-decoration: underline;
     color: yellow;
-    text-shadow: 2px 2px white;
+    
     text-align: center;
     width: 100%;
     
     border-collapse: collapse;
     background-color: black;
   }
+
+  * {
+    box-sizing: border-box
+  }
+
+  #artist_news{
+    height:500px;
+  }
+
+/*-----------------------------------------------------*/
