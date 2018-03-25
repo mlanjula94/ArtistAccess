@@ -1,69 +1,96 @@
 body {
-    background: black;
+  background: linear-gradient(to right, black, gray);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  
+  /*justify-content: center;*/
 }
-#searchBarWrap{ 
-    display: flex;
+
+#searchBarWrap {
+  display: flex;
   justify-content: center;
 }
 
-
-#searchBar{
- border:yellow solid;
- border-width: .2em;
- border-radius: .7em 0 0 .7em;
- padding: .2em .2em .2em .5em;
- width: 225px;
+#searchBar {
+  border: yellow solid;
+  border-width: .2em;
+  border-radius: .7em 0 0 .7em;
+  padding: .2em .2em .2em .5em;
+  width: 225px;
 }
 
-#searchBtn{
- border:yellow solid;
- border-width: .2em;
- border-radius: 0 .7em .7em 0;
- background-color: black;
- color:white;
- font-weight:bold;
- padding-bottom: .2em;
-
+#searchBtn {
+  border: yellow solid;
+  border-width: .2em;
+  border-radius: 0 .7em .7em 0;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding-bottom: .2em;
 }
 
-body, html {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-  }
-  
-  .container {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .pane {
-      color: yellow;
-     /* position: relative;*/
-      text-align: center;
-      height: 50%;
-      background-color: black;
-      border-collapse: collapse;
-  }
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 
-  .toppane {
-    font-size: 100px;
-    text-decoration: underline;
-    color: yellow;
-    
-    text-align: center;
-    width: 100%;
-    
-    border-collapse: collapse;
-    background-color: black;
-  }
+.container {
+  width: 100%;
+  height: 100%;
+}
 
-  * {
-    box-sizing: border-box
-  }
+.pane {
+  color: yellow;
+  /* position: relative;*/
+  text-align: center;
+  height: 50%;
+  /*background-color: black;*/
+  border-collapse: collapse;
+}
 
-  #artist_news{
-    height:500px;
-  }
+.toppane {
+  font-size: 100px;
+  text-decoration: underline;
+  color: yellow;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+  /*background-color: black;*/
+}
+
+* {
+  box-sizing: border-box
+}
+
+#artist_news {
+  height: 500px;
+}
+
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  margin-top: -35px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+#arrow-left {
+  border-width: 30px 40px 30px 0;
+  border-color: transparent #fff transparent transparent;
+  left: 0;
+  margin-left: 30px;
+}
+
+#arrow-right {
+  border-width: 30px 0 30px 40px;
+  border-color: transparent transparent transparent #fff;
+  right: 0;
+  margin-right: 30px;
+}
 
 /*-----------------------------------------------------*/

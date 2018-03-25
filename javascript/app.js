@@ -14,15 +14,14 @@ function artistMain() {
   $("#weather").empty();
   $("#artist_news").empty();
   $("#spotify").empty();
-  $(".weatherDiv").css("display","none");
-  console.log(artist);
+  $(".weatherDiv").css("display", "none");
 
   stopSlideshow();
-  //displaySpotify();
+  startSlideshow();
   displayNews();
   displayTicketInfo();
   //showSlides(slideIndex);
-  //displayPlaylist()
+  displayPlaylist()
 };
 
 $("#searchBtn").click(function (event) {
@@ -35,31 +34,29 @@ $("#searchBtn").click(function (event) {
   $("#weather").empty();
   $("#artist_news").empty();
   $("#spotify").empty();
-  $(".weatherDiv").css("display","none");
+  $(".weatherDiv").css("display", "none");
 
-  //displaySpotify();
   displayNews();
   displayTicketInfo();
   //showSlides(slideIndex);
-  //displayPlaylist()
+  displayPlaylist()
 });
 
 function displayNews() {
-  console.log(artist);
   $.ajax({
     url: "https://newsapi.org/v2/everything?sources=mtv-news&" +
       "apiKey=b9afaea6d5c54fb6a1de0115048012ee&q=" + artist,
     method: 'GET',
     dataType: "json"
   }).done(function (result) {
-    console.log(result);
+    //console.log(result);
 
     maxCount = parseInt(result.totalResults);
 
     for (var i = 0; i < parseInt(result.totalResults) - 1; i++) {
       var article = result.articles[i];
       var articleNum = i + 1;
-      var articleDiv = $("<div>");
+      var articleDiv = $("<a href='" + article.url + "'>");
       //articleDiv.addClass("mySlides");
       //articleDiv.addClass("fade");
       articleDiv.addClass("text-info slide-content");
@@ -87,8 +84,6 @@ function displayNews() {
         );
       }
 
-
-      // if the article has a byline, log and append to articleDiv
       var byline = article.description;
       if (byline) {
         articleDiv.append("<p>" + byline + "</p>");
@@ -100,13 +95,6 @@ function displayNews() {
       if (pubDate) {
         articleDiv.append("<h5>" + pubDate + "</h5>");
       }
-
-      //   // append and log url
-      //   articleDiv.append(
-      //     "<a href='" + article.url + "'>" + article.url + "</a>"
-      //   );
-      //   //console.log(article.web_url);
-      // }
 
       slide.push(articleDiv);
     }
@@ -126,11 +114,10 @@ function displayImage() {
 }
 
 function nextImage() {
-  //$("#artist_news").html(slide[count]);
   count++;
   //setTimeout
 
-  $("#artist_news").html("<img src='./images/loading.gif' width='100%'/>");
+  $("#artist_news").html("<img src='../images/loading.gif' width='100%'/>");
 
   setTimeout(displayImage, 1000);
   if (count === slide.length) {
@@ -145,9 +132,22 @@ function stopSlideshow() {
   }
 }
 
+function nextClick() {
+  count++;
+  console.log("lefty");
+  displayImage();
+};
+
+function prevClick(){
+  count--;
+  console.log("righty");
+  displayImage();
+};
+
+
 function displayTicketInfo() {
   $("#tours").empty();
-  $(".weatherDiv").css("display","none");
+  $(".weatherDiv").css("display", "none");
   $.ajax({
     type: "GET",
     url: "https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=lVYGpSlPaCHOUOJwywjUkjDcjfNmbrUR" +
@@ -156,6 +156,7 @@ function displayTicketInfo() {
     dataType: "json",
     success: function (json) {
       //console.log(json);
+
       event = json._embedded.events;
 
       for (var i = 0; i < event.length; i++) {
@@ -202,7 +203,7 @@ function displayTicketInfo() {
 
 function displayWeather() {
   $("#weather").empty();
-  $(".weatherDiv").css("display","block");
+  $(".weatherDiv").css("display", "block");
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var city = $(this).attr("location");
   if (city === "TBA") {
@@ -264,7 +265,6 @@ function displayWeather() {
 
 function displaySelectedEvent() {
   $("#tours").empty();
-  console.log("test");
   var city = $(this).attr("location");
   var eventName = $(this).attr("name");
   var date = $(this).attr("date");
@@ -279,8 +279,8 @@ function displaySelectedEvent() {
   var body_info = "<div class='text-center text-info font-italic'>DATE :" + date + "    TIME" + time + " </div>"
   var body_url = "<a href='" + url + "'>Buy tickets here</a>";
   var back_btn = "<img class='text-center backToEvents' width=10% height=auto src='./images/back-button.png' alt='back btn'>";
-  
-  $("#tours").append(heading, body_img, date_time, body_info, body_url,"<br><br>",back_btn);
+
+  $("#tours").append(heading, body_img, date_time, body_info, body_url, "<br><br>", back_btn);
 
 }
 
@@ -309,12 +309,13 @@ function displayPlaylist() {
       var iframe = '<iframe src="https://open.spotify.com/embed/' +
         'artist/' + response.artists.items[0].id +
         '" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>';
-      console.log(iframe);
       $("#spotify").append(iframe);
 
     })
 }
 
+$(document).on("click", ".arrow-left", prevClick);
+$(document).on("click", ".arrow-right", nextClick);
 $(document).on("click", ".tour", displayWeather);
 $(document).on("click", ".tour", displaySelectedEvent);
 $(document).on("click", ".backToEvents", displayTicketInfo);
