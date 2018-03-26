@@ -13,15 +13,18 @@
 
     <title>Artist Access</title>
 </head>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 
 <body>
     <div class="main-container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="index.html"><img src="images/icon small.png" alt="Artist Access">Artist Access</a>
-          
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <div class="navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <form class="form-inline ">
@@ -36,7 +39,7 @@
         <div class="container">
 
             <div class="row mt-2">
-                <div class="col-12 col-sm-8 pane">
+                <div class="col-12 col-sm-6 pane">
                     <h1>Recent News</h1>
                     <button id="arrow-left" class="arrow"></button>
                     <div id="artist_news"></div>
@@ -44,7 +47,7 @@
 
 
                 </div>
-                <div class="col-12 col-sm-4 pane">
+                <div class="col-12 col-sm-6 pane">
                     <h1>Spotify Playlist</h1>
                     <div id=spotify></div>
 
@@ -72,7 +75,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script src="javascript/app.js"></script>
+    <script src="../javascript/app.js"></script>
 </body>
 
 </html>

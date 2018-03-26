@@ -116,7 +116,6 @@ function displayImage() {
 
 function nextImage() {
   count = 1 + count;
-  //setTimeout
 
   $("#artist_news").html("<img src='./images/loading.gif' width='100%'/>");
 
