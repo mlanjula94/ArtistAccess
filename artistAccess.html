@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <title>Artist Access</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<body>
+    <div class="main-container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html"><img src="images/icon small.png" alt="Artist Access">Artist Access</a>
+          
+
+            <div class="navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <form class="form-inline ">
+                    <input id="searchBar" type="text" name="searchbar" placeholder="Search for Artist" />
+                    <button id="searchBtn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+
+            </div>
+        </nav>
+        <div class="container">
+
+            <div class="row mt-2">
+                <div class="col-12 col-sm-8 pane">
+                    <h1>Recent News</h1>
+                    <button id="arrow-left" class="arrow"></button>
+                    <div id="artist_news"></div>
+                    <button id="arrow-right" class="arrow"></button>
+
+
+                </div>
+                <div class="col-12 col-sm-4 pane">
+                    <h1>Spotify Playlist</h1>
+                    <div id=spotify></div>
+
+                </div>
+            </div>
+            <div class="row mt-2 m-b-2">
+                <div class="col-12 col-sm-6 pane">
+                    <h1>Tour Dates</h1>
+                    <div id="tours" class="col-12 col-sm-12"></div>
+                </div>
+                <div class="col-12 col-sm-6 weatherDiv pane">
+                    <h1>Weather on event day</h1>
+                    <div id="weather"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted footer">
+        <p>Contact Us:
+            <a href="#">Daniel Osborne</a> |
+            <a href="#">Anjula Epasinghe</a> |
+            <a href="#">Vishva Weerasingha</a>
+        </p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script src="javascript/app.js"></script>
+</body>
+
+</html>

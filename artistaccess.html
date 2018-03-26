@@ -16,50 +16,60 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <body>
-    <nav id="searchBarWrap">
-        <input id="searchBar" type="text" name="searchbar" placeholder="Search for Artist" />
-        <button id="searchBtn">
-            <i class="fa fa-search"></i>
-        </button>
-        <nav id="homeButton" button type="button" class="btn btn-home">Home</nav>
-    </nav>
+    <div class="main-container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html"><img src="images/icon small.png" alt="Artist Access">Artist Access</a>
+          
 
-    <div class="container">
-        <div class="row">
-            <div class="toppane">
-                Artist Access
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-12 col-sm-6 pane">
-                <h1>Recent News</h1>
-
-                <div id="artist_news"></div>
-                <div id="arrow-right" class="arrow"></div>
-
+            <div class="navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <form class="form-inline ">
+                    <input id="searchBar" type="text" name="searchbar" placeholder="Search for Artist" />
+                    <button id="searchBtn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
 
             </div>
-            <div class="col-12 col-sm-6 pane">
-                <h1>Spotify Playlist</h1>
-                <div id=spotify></div>
+        </nav>
+        <div class="container">
 
+            <div class="row mt-2">
+                <div class="col-12 col-sm-8 pane">
+                    <h1>Recent News</h1>
+                    <button id="arrow-left" class="arrow"></button>
+                    <div id="artist_news"></div>
+                    <button id="arrow-right" class="arrow"></button>
+
+
+                </div>
+                <div class="col-12 col-sm-4 pane">
+                    <h1>Spotify Playlist</h1>
+                    <div id=spotify></div>
+
+                </div>
             </div>
-        </div>
-        <div class="row mt-2 m-b-2">
-            <div class="col-12 col-sm-6 pane">
-                <h1>Tour Dates</h1>
-                <div id="tours" class="col-12 col-sm-12"></div>
-            </div>
-            <div class="col-12 col-sm-6 weatherDiv pane">
-                <h1>Weather on event day</h1>
-                <div id="weather"></div>
+            <div class="row mt-2 m-b-2">
+                <div class="col-12 col-sm-6 pane">
+                    <h1>Tour Dates</h1>
+                    <div id="tours" class="col-12 col-sm-12"></div>
+                </div>
+                <div class="col-12 col-sm-6 weatherDiv pane">
+                    <h1>Weather on event day</h1>
+                    <div id="weather"></div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="card-footer text-muted footer">
+        <p>Contact Us:
+            <a href="#">Daniel Osborne</a> |
+            <a href="#">Anjula Epasinghe</a> |
+            <a href="#">Vishva Weerasingha</a>
+        </p>
+    </div>
 
-    <div class="footer">
-        <p>Contact Us: <a href="#">Daniel Osborne</a> | <a href="#">Anjula Epasinghe</a> | <a href="#">Vishva Weerasingha</a> </p>
-      </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
     <script src="javascript/app.js"></script>
