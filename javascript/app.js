@@ -1,6 +1,6 @@
 var artist = "";
 var artistName = "";
-var count = 0;
+var count = 0.0;
 var maxCount = 0;
 var slide = [];
 var showImage;
@@ -14,55 +14,52 @@ function artistMain() {
   $("#weather").empty();
   $("#artist_news").empty();
   $("#spotify").empty();
-  $(".weatherDiv").css("display","none");
-  console.log(artist);
+  $(".weatherDiv").css("display", "none");
 
   stopSlideshow();
-  //displaySpotify();
+  startSlideshow();
   displayNews();
   displayTicketInfo();
   //showSlides(slideIndex);
-  //displayPlaylist()
+  displayPlaylist()
 };
 
 $("#searchBtn").click(function (event) {
   event.preventDefault();
   slide = [];
-  count = 0;
+  count = 0.0;
   maxCount = 0;
   artist = $("#searchBar").val();
   $("#tours").empty();
   $("#weather").empty();
   $("#artist_news").empty();
   $("#spotify").empty();
-  $(".weatherDiv").css("display","none");
+  $(".weatherDiv").css("display", "none");
 
-  //displaySpotify();
   displayNews();
   displayTicketInfo();
   //showSlides(slideIndex);
-  //displayPlaylist()
+  displayPlaylist()
 });
 
 function displayNews() {
-  console.log(artist);
   $.ajax({
     url: "https://newsapi.org/v2/everything?sources=mtv-news&" +
       "apiKey=b9afaea6d5c54fb6a1de0115048012ee&q=" + artist,
     method: 'GET',
     dataType: "json"
   }).done(function (result) {
-    console.log(result);
+    //console.log(result);
 
     maxCount = parseInt(result.totalResults);
 
     for (var i = 0; i < parseInt(result.totalResults) - 1; i++) {
       var article = result.articles[i];
       var articleNum = i + 1;
-      var articleDiv = $("<div>");
+      var articleDiv = $("<a href='" + article.url + "'>");
       //articleDiv.addClass("mySlides");
       //articleDiv.addClass("fade");
-      articleDiv.addClass("text-info slide-content");
+      articleDiv.addClass("text-white slide-content");
       articleDiv.addClass("text-left");
       articleDiv.attr("id", "article-" + i + 1);
 
@@ -87,8 +84,6 @@ function displayNews() {
         );
       }
 
-
-      // if the article has a byline, log and append to articleDiv
       var byline = article.description;
       if (byline) {
         articleDiv.append("<p>" + byline + "</p>");
@@ -101,13 +96,6 @@ function displayNews() {
         articleDiv.append("<h5>" + pubDate + "</h5>");
       }
 
-      //   // append and log url
-      //   articleDiv.append(
-      //     "<a href='" + article.url + "'>" + article.url + "</a>"
-      //   );
-      //   //console.log(article.web_url);
-      // }
-
       slide.push(articleDiv);
     }
     startSlideshow();
@@ -118,23 +106,23 @@ function displayNews() {
 }
 
 function startSlideshow() {
-  showImage = setInterval(nextImage, 3000);
+  showImage = setInterval(nextImage, 5000);
 }
 
 function displayImage() {
+  console.log(count);
   $("#artist_news").html(slide[count]);
 }
 
 function nextImage() {
-  //$("#artist_news").html(slide[count]);
-  count++;
+  count = 1 + count;
   //setTimeout
 
   $("#artist_news").html("<img src='./images/loading.gif' width='100%'/>");
 
   setTimeout(displayImage, 1000);
   if (count === slide.length) {
-    count = 0;
+    count = 1;
   }
 }
 
@@ -145,64 +133,76 @@ function stopSlideshow() {
   }
 }
 
+function nextClick() {
+  clearInterval(showImage);
+  count = count + 1.0;
+  displayImage();
+};
+
+function prevClick() {
+  count = count - 1.0;
+  clearInterval(showImage);
+  console.log("righty");
+  displayImage();
+};
+
+
 function displayTicketInfo() {
   $("#tours").empty();
-  $(".weatherDiv").css("display","none");
+  $(".weatherDiv").css("display", "none");
   $.ajax({
     type: "GET",
     url: "https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=lVYGpSlPaCHOUOJwywjUkjDcjfNmbrUR" +
       '&keyword=' + artist,
     async: true,
-    dataType: "json",
-    success: function (json) {
-      //console.log(json);
-      event = json._embedded.events;
+    dataType: "json"
+  }).done(function (result) {
+    console.log(result);
 
-      for (var i = 0; i < event.length; i++) {
-        var eventName = event[i].name;
-        var location = "";
-        if (event[i].dates.timezone) {
-          location = event[i].dates.timezone.split("/");
-        } else {
-          location = "TBA"
-        }
-        eventDate = event[i].dates.start.localDate;
+    var event = result._embedded.events;
 
-
-        var eventBtn = $("<a>");
-        eventBtn.addClass("tour text-left");
-        eventBtn.attr("name", eventName);
-        eventBtn.attr("date", eventDate);
-        eventBtn.attr("location", location);
-        eventBtn.attr("time", event[i].dates.localTime);
-        eventBtn.attr("info", event[i].info);
-        eventBtn.attr("url", event[i].url);
-        eventBtn.attr("img", event[i].images[0].url);
-
-        eventBtn.attr("id", "event-" + i + 1);
-
-        eventNum = i + 1;
-
-        $("#tours").append(eventBtn);
-        //console.log(location);
-        if (eventName) {
-
-          eventBtn.append(
-            '<p type="button" class="bg-dark">' + eventDate + ' | ' + eventName + ' | ' +
-            location + ' </p>'
-          );
-        }
+    for (var i = 0; i < event.length; i++) {
+      var eventName = event[i].name;
+      var location = "";
+      if (event[i].dates.timezone) {
+        location = event[i].dates.timezone.split("/");
+      } else {
+        location = "TBA"
       }
-    },
-    error: function (xhr, status, err) {
-      // This time, we do not end up here!
+      eventDate = event[i].dates.start.localDate;
+
+
+      var eventBtn = $("<a>");
+      eventBtn.addClass("tour text-left");
+      eventBtn.attr("name", eventName);
+      eventBtn.attr("date", eventDate);
+      eventBtn.attr("location", location);
+      eventBtn.attr("time", event[i].dates.localTime);
+      eventBtn.attr("info", event[i].info);
+      eventBtn.attr("url", event[i].url);
+      eventBtn.attr("img", event[i].images[0].url);
+
+      eventBtn.attr("id", "event-" + i + 1);
+
+      eventNum = i + 1;
+
+      $("#tours").append(eventBtn);
+      //console.log(location);
+      if (eventName) {
+
+        eventBtn.append(
+          '<p type="button" class="bg-dark">' + eventDate + ' | ' + eventName + ' | ' +
+          location + ' </p>'
+        );
+      }
     }
-  });
+  })
+
 }
 
 function displayWeather() {
   $("#weather").empty();
-  $(".weatherDiv").css("display","block");
+  $(".weatherDiv").css("display", "block");
   var APIKey = "166a433c57516f51dfab1f7edaed8413";
   var city = $(this).attr("location");
   if (city === "TBA") {
@@ -226,12 +226,12 @@ function displayWeather() {
         //console.log(response);
 
         var locationDiv = $("<div>");
-        locationDiv.addClass("text-center font-weight-bold h3 text-info");
+        locationDiv.addClass("text-center font-weight-bold h3 text-white");
         locationDiv.append(city + " on " + date);
         $("#weather").append(locationDiv);
 
         //var dateDiv = $("<div>");
-        //locationDiv.addClass("text-right font-weight-bold h3 text-info");
+        //locationDiv.addClass("text-right font-weight-bold h3 text-white");
         //locationDiv.text(date);
 
         $("#weather").append(locationDiv);
@@ -239,7 +239,7 @@ function displayWeather() {
         $("#weather").append("<hr>");
 
         var weatherDiv = $("<div>");
-        weatherDiv.addClass("text-center h2 text-info");
+        weatherDiv.addClass("text-center h2 text-white");
         weatherDiv.text('Weather summary : ' + response.weather[0].description);
         //console.log(response.weather[0].description);
         $("#weather").append(weatherDiv);
@@ -247,14 +247,14 @@ function displayWeather() {
         var faranhite = 1.8 * (parseInt(response.main.temp) - 273) + 32;
 
         var weatherDiv2 = $("<div>");
-        weatherDiv2.addClass("text-center h2 text-info");
+        weatherDiv2.addClass("text-center h2 text-white");
         weatherDiv2.css("display", "inline-block")
         weatherDiv2.text('Temperature : ' + faranhite + 'F');
         //console.log(faranhite);
         $("#weather").append(weatherDiv2);
 
         var weatherDiv2 = $("<div>");
-        weatherDiv2.addClass("text-center h2 text-info");
+        weatherDiv2.addClass("text-center h2 text-white");
         weatherDiv2.text('Humidity : ' + response.main.humidity);
         //console.log(response.main.humidity + "cccc" + response.main.temp);
         $("#weather").append(weatherDiv2);
@@ -264,7 +264,6 @@ function displayWeather() {
 
 function displaySelectedEvent() {
   $("#tours").empty();
-  console.log("test");
   var city = $(this).attr("location");
   var eventName = $(this).attr("name");
   var date = $(this).attr("date");
@@ -273,14 +272,14 @@ function displaySelectedEvent() {
   var url = $(this).attr("url");
   var imgsrc = $(this).attr("img");
 
-  var heading = "<h3 class='text-center font-weight-bold h3 text-info'>" + eventName + "</h3>";
+  var heading = "<h3 class='text-center font-weight-bold h3 text-white'>" + eventName + "</h3>";
   var body_img = "<img class='text-center' width=50% height=auto src='" + imgsrc + "' alt='event image'>";
-  var date_time = "<div class='text-center text-info'>DATE :" + date + "    TIME" + time + " </div>"
-  var body_info = "<div class='text-center text-info font-italic'>DATE :" + date + "    TIME" + time + " </div>"
+  var date_time = "<div class='text-center text-white'>DATE :" + date + "    TIME" + time + " </div>"
+  var body_info = "<div class='text-center text-white font-italic'>DATE :" + date + "    TIME" + time + " </div>"
   var body_url = "<a href='" + url + "'>Buy tickets here</a>";
   var back_btn = "<img class='text-center backToEvents' width=10% height=auto src='./images/back-button.png' alt='back btn'>";
-  
-  $("#tours").append(heading, body_img, date_time, body_info, body_url,"<br><br>",back_btn);
+
+  $("#tours").append(heading, body_img, date_time, body_info, body_url, "<br><br>", back_btn);
 
 }
 
@@ -290,7 +289,7 @@ function displayPlaylist() {
   // console.log('this.state', this.state);
   const BASE_URL = 'https://api.spotify.com/v1/search?';
   const FETCH_URL = BASE_URL + 'q=' + artist + '&type=artist&limit=1';
-  var accessToken = 'BQAFPgXnbQMR2Sm7setlz_ZjbxYyt88Uj63Jc0zkscBsomQR31iNKE7Dudn3mDOrEBTpFApi1uaLII2LR_41QkYTvojl7fxN199-1Wy_J_zKBoGMZqiWSxeYRwmTmuaa9sEzBVMV4AMHv1E06xpS4hTtGOTjRfD0MNAFioU'
+  var accessToken = 'BQDQ622Hr8vYSXUrO7ufbyYwwzy47FdI19N4we7dZKMe-z9wPly8kCgrSpixx2g_4slmhZDSnbMRzlN98q5bV8Ib-zZivP5-CSXWvISZ1Z2meIKw6B0NtN4iIlcJic47z8YWkGbgq4Vesfz2HpXFtGgP17nqf74Eb5acEUw'
   var myHeaders = new Headers();
 
   var myOptions = {
@@ -309,12 +308,13 @@ function displayPlaylist() {
       var iframe = '<iframe src="https://open.spotify.com/embed/' +
         'artist/' + response.artists.items[0].id +
         '" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>';
-      console.log(iframe);
       $("#spotify").append(iframe);
 
     })
 }
 
+$(document).on("click", "#arrow-left", prevClick);
+$(document).on("click", "#arrow-right", nextClick);
 $(document).on("click", ".tour", displayWeather);
 $(document).on("click", ".tour", displaySelectedEvent);
 $(document).on("click", ".backToEvents", displayTicketInfo);
