@@ -4,7 +4,10 @@ var count = 0.0;
 var maxCount = 0;
 var slide = [];
 var showImage;
-artistMain();
+
+
+  artistMain();
+
 
 function artistMain() {
   artist = localStorage.getItem("artist");
@@ -56,7 +59,7 @@ function displayNews() {
     for (var i = 0; i < parseInt(result.totalResults) - 1; i++) {
       var article = result.articles[i];
       var articleNum = i + 1;
-      var articleDiv = $("<a href='" + article.url + "'>");
+      var articleDiv = $("<a target='blank' href='" + article.url + "'>");
       //articleDiv.addClass("mySlides");
       //articleDiv.addClass("fade");
       articleDiv.addClass("text-white slide-content");
