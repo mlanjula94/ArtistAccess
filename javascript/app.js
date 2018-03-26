@@ -4,7 +4,10 @@ var count = 0.0;
 var maxCount = 0;
 var slide = [];
 var showImage;
-artistMain();
+
+
+  artistMain();
+
 
 function artistMain() {
   artist = localStorage.getItem("artist");
