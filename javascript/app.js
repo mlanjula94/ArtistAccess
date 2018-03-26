@@ -291,7 +291,7 @@ function displayPlaylist() {
   // console.log('this.state', this.state);
   const BASE_URL = 'https://api.spotify.com/v1/search?';
   const FETCH_URL = BASE_URL + 'q=' + artist + '&type=artist&limit=1';
-  var accessToken = 'BQCr96QMTDwt8eP-YKSpgnJXkeHlbIWUvTcOL2whVierKt3OYUOJPf1mRpmA6n-PCeXF4xDDt1d7kbXQp7DzlOHt1UieAkb25pdAgTrphxyTQRpfoNkijwi0sPiX-psRiGjOdVMauxbWMPpPfA4Yjm_NpvyAyQEdT-5-OxY'
+  var accessToken = 'BQBEAMMJkczvXPIjE_Hp92T5GKAP3Pub0QiZi_II73asiyCtH8TAQSRKE_NGqNcDPpbLeSSgI5NCIg8TTyJe7_drqjPcqvUCOLDq7YIBMJF07rs3h3hKCfIo7eVOgY-kSqLbD4RHFwnar3Bs9STj8n0MKE_ZpLtaJFq9FD'
   var myHeaders = new Headers();
 
   var myOptions = {
