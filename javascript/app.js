@@ -1,6 +1,6 @@
 var artist = "";
 var artistName = "";
-var count = 0;
+var count = 0.0;
 var maxCount = 0;
 var slide = [];
 var showImage;
@@ -27,7 +27,7 @@ function artistMain() {
 $("#searchBtn").click(function (event) {
   event.preventDefault();
   slide = [];
-  count = 0;
+  count = 0.0;
   maxCount = 0;
   artist = $("#searchBar").val();
   $("#tours").empty();
@@ -59,7 +59,7 @@ function displayNews() {
       var articleDiv = $("<a href='" + article.url + "'>");
       //articleDiv.addClass("mySlides");
       //articleDiv.addClass("fade");
-      articleDiv.addClass("text-info slide-content");
+      articleDiv.addClass("text-white slide-content");
       articleDiv.addClass("text-left");
       articleDiv.attr("id", "article-" + i + 1);
 
@@ -106,22 +106,23 @@ function displayNews() {
 }
 
 function startSlideshow() {
-  showImage = setInterval(nextImage, 3000);
+  showImage = setInterval(nextImage, 5000);
 }
 
 function displayImage() {
+  console.log(count);
   $("#artist_news").html(slide[count]);
 }
 
 function nextImage() {
-  count++;
+  count = 1 + count;
   //setTimeout
 
-  $("#artist_news").html("<img src='../images/loading.gif' width='100%'/>");
+  $("#artist_news").html("<img src='./images/loading.gif' width='100%'/>");
 
-  setTimeout(displayImage, 1000);
+  setTimeout(displayImage, 500);
   if (count === slide.length) {
-    count = 0;
+    count = 1;
   }
 }
 
@@ -133,13 +134,14 @@ function stopSlideshow() {
 }
 
 function nextClick() {
-  count++;
-  console.log("lefty");
+  clearInterval(showImage);
+  count = count + 1.0;
   displayImage();
 };
 
-function prevClick(){
-  count--;
+function prevClick() {
+  count = count - 1.0;
+  clearInterval(showImage);
   console.log("righty");
   displayImage();
 };
@@ -153,52 +155,49 @@ function displayTicketInfo() {
     url: "https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=lVYGpSlPaCHOUOJwywjUkjDcjfNmbrUR" +
       '&keyword=' + artist,
     async: true,
-    dataType: "json",
-    success: function (json) {
-      //console.log(json);
+    dataType: "json"
+  }).done(function (result) {
+    console.log(result);
 
-      event = json._embedded.events;
+    var event = result._embedded.events;
 
-      for (var i = 0; i < event.length; i++) {
-        var eventName = event[i].name;
-        var location = "";
-        if (event[i].dates.timezone) {
-          location = event[i].dates.timezone.split("/");
-        } else {
-          location = "TBA"
-        }
-        eventDate = event[i].dates.start.localDate;
-
-
-        var eventBtn = $("<a>");
-        eventBtn.addClass("tour text-left");
-        eventBtn.attr("name", eventName);
-        eventBtn.attr("date", eventDate);
-        eventBtn.attr("location", location);
-        eventBtn.attr("time", event[i].dates.localTime);
-        eventBtn.attr("info", event[i].info);
-        eventBtn.attr("url", event[i].url);
-        eventBtn.attr("img", event[i].images[0].url);
-
-        eventBtn.attr("id", "event-" + i + 1);
-
-        eventNum = i + 1;
-
-        $("#tours").append(eventBtn);
-        //console.log(location);
-        if (eventName) {
-
-          eventBtn.append(
-            '<p type="button" class="bg-dark">' + eventDate + ' | ' + eventName + ' | ' +
-            location + ' </p>'
-          );
-        }
+    for (var i = 0; i < event.length; i++) {
+      var eventName = event[i].name;
+      var location = "";
+      if (event[i].dates.timezone) {
+        location = event[i].dates.timezone.split("/");
+      } else {
+        location = "TBA"
       }
-    },
-    error: function (xhr, status, err) {
-      // This time, we do not end up here!
+      eventDate = event[i].dates.start.localDate;
+
+
+      var eventBtn = $("<a>");
+      eventBtn.addClass("tour text-left");
+      eventBtn.attr("name", eventName);
+      eventBtn.attr("date", eventDate);
+      eventBtn.attr("location", location);
+      eventBtn.attr("time", event[i].dates.localTime);
+      eventBtn.attr("info", event[i].info);
+      eventBtn.attr("url", event[i].url);
+      eventBtn.attr("img", event[i].images[0].url);
+
+      eventBtn.attr("id", "event-" + i + 1);
+
+      eventNum = i + 1;
+
+      $("#tours").append(eventBtn);
+      //console.log(location);
+      if (eventName) {
+
+        eventBtn.append(
+          '<p type="button" class="bg-dark">' + eventDate + ' | ' + eventName + ' | ' +
+          location + ' </p>'
+        );
+      }
     }
-  });
+  })
+
 }
 
 function displayWeather() {
@@ -227,12 +226,12 @@ function displayWeather() {
         //console.log(response);
 
         var locationDiv = $("<div>");
-        locationDiv.addClass("text-center font-weight-bold h3 text-info");
+        locationDiv.addClass("text-center font-weight-bold h3 text-white");
         locationDiv.append(city + " on " + date);
         $("#weather").append(locationDiv);
 
         //var dateDiv = $("<div>");
-        //locationDiv.addClass("text-right font-weight-bold h3 text-info");
+        //locationDiv.addClass("text-right font-weight-bold h3 text-white");
         //locationDiv.text(date);
 
         $("#weather").append(locationDiv);
@@ -240,7 +239,7 @@ function displayWeather() {
         $("#weather").append("<hr>");
 
         var weatherDiv = $("<div>");
-        weatherDiv.addClass("text-center h2 text-info");
+        weatherDiv.addClass("text-center h2 text-white");
         weatherDiv.text('Weather summary : ' + response.weather[0].description);
         //console.log(response.weather[0].description);
         $("#weather").append(weatherDiv);
@@ -248,14 +247,14 @@ function displayWeather() {
         var faranhite = 1.8 * (parseInt(response.main.temp) - 273) + 32;
 
         var weatherDiv2 = $("<div>");
-        weatherDiv2.addClass("text-center h2 text-info");
+        weatherDiv2.addClass("text-center h2 text-white");
         weatherDiv2.css("display", "inline-block")
         weatherDiv2.text('Temperature : ' + faranhite + 'F');
         //console.log(faranhite);
         $("#weather").append(weatherDiv2);
 
         var weatherDiv2 = $("<div>");
-        weatherDiv2.addClass("text-center h2 text-info");
+        weatherDiv2.addClass("text-center h2 text-white");
         weatherDiv2.text('Humidity : ' + response.main.humidity);
         //console.log(response.main.humidity + "cccc" + response.main.temp);
         $("#weather").append(weatherDiv2);
@@ -273,10 +272,10 @@ function displaySelectedEvent() {
   var url = $(this).attr("url");
   var imgsrc = $(this).attr("img");
 
-  var heading = "<h3 class='text-center font-weight-bold h3 text-info'>" + eventName + "</h3>";
+  var heading = "<h3 class='text-center font-weight-bold h3 text-white'>" + eventName + "</h3>";
   var body_img = "<img class='text-center' width=50% height=auto src='" + imgsrc + "' alt='event image'>";
-  var date_time = "<div class='text-center text-info'>DATE :" + date + "    TIME" + time + " </div>"
-  var body_info = "<div class='text-center text-info font-italic'>DATE :" + date + "    TIME" + time + " </div>"
+  var date_time = "<div class='text-center text-white'>DATE :" + date + "    TIME" + time + " </div>"
+  var body_info = "<div class='text-center text-white font-italic'>DATE :" + date + "    TIME" + time + " </div>"
   var body_url = "<a href='" + url + "'>Buy tickets here</a>";
   var back_btn = "<img class='text-center backToEvents' width=10% height=auto src='./images/back-button.png' alt='back btn'>";
 
@@ -290,7 +289,7 @@ function displayPlaylist() {
   // console.log('this.state', this.state);
   const BASE_URL = 'https://api.spotify.com/v1/search?';
   const FETCH_URL = BASE_URL + 'q=' + artist + '&type=artist&limit=1';
-  var accessToken = 'BQAFPgXnbQMR2Sm7setlz_ZjbxYyt88Uj63Jc0zkscBsomQR31iNKE7Dudn3mDOrEBTpFApi1uaLII2LR_41QkYTvojl7fxN199-1Wy_J_zKBoGMZqiWSxeYRwmTmuaa9sEzBVMV4AMHv1E06xpS4hTtGOTjRfD0MNAFioU'
+  var accessToken = 'BQBgfOiY91fPXCGF_3x4YGvZCK80yxMlKjFx2x9PIzpvsd4p6HVTt0BuGPQErEucRbOP0TEq6J0u5D9lVEpkBeIhzPtGJTJ5A8P4hjglTAIFvwjFphexjYzQMvlADI2-fhPp5T7mPjta8x4kW0K7Ad90-jIlIi6GfxPHt9w'
   var myHeaders = new Headers();
 
   var myOptions = {
@@ -314,8 +313,8 @@ function displayPlaylist() {
     })
 }
 
-$(document).on("click", ".arrow-left", prevClick);
-$(document).on("click", ".arrow-right", nextClick);
+$(document).on("click", "#arrow-left", prevClick);
+$(document).on("click", "#arrow-right", nextClick);
 $(document).on("click", ".tour", displayWeather);
 $(document).on("click", ".tour", displaySelectedEvent);
 $(document).on("click", ".backToEvents", displayTicketInfo);

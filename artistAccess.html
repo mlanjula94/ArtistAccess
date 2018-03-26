@@ -13,25 +13,30 @@
 
     <title>Artist Access</title>
 </head>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 <body>
     <div class="main-container">
-        <nav id="searchBarWrap">
-            <input id="searchBar" type="text" name="searchbar" placeholder="Search for Artist" />
-            <button id="searchBtn">
-                <i class="fa fa-search"></i>
-            </button>
-        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html"><img src="images/icon small.png" alt="Artist Access">Artist Access</a>
+          
 
-        <div class="container">
-            <div class="row">
-                <div class="toppane">
-                    Artist Access
-                </div>
+            <div class="navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <form class="form-inline ">
+                    <input id="searchBar" type="text" name="searchbar" placeholder="Search for Artist" />
+                    <button id="searchBtn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+
             </div>
+        </nav>
+        <div class="container">
+
             <div class="row mt-2">
-                <div class="col-12 col-sm-6 pane">
+                <div class="col-12 col-sm-8 pane">
                     <h1>Recent News</h1>
                     <button id="arrow-left" class="arrow"></button>
                     <div id="artist_news"></div>
@@ -39,7 +44,7 @@
 
 
                 </div>
-                <div class="col-12 col-sm-6 pane">
+                <div class="col-12 col-sm-4 pane">
                     <h1>Spotify Playlist</h1>
                     <div id=spotify></div>
 
@@ -57,9 +62,17 @@
             </div>
         </div>
     </div>
+    <div class="card-footer text-muted footer">
+        <p>Contact Us:
+            <a href="#">Daniel Osborne</a> |
+            <a href="#">Anjula Epasinghe</a> |
+            <a href="#">Vishva Weerasingha</a>
+        </p>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script src="../javascript/app.js"></script>
+    <script src="javascript/app.js"></script>
 </body>
 
 </html>
